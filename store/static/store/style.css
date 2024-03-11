@@ -1,0 +1,589 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
+
+:root{
+    --clr1: #702F1A;
+    --clr2: #C76431;
+    --clr3: #E49978;
+    --clr4: #A08595;
+    --clr5: #9B2408;
+    --clr6: #01538B;
+    --clr7: #DDCFD2;
+    --clr8: #16601E;
+    --clr9: #383232;
+    --shad_clr: #0f0f0f9c;
+    --text-gray: #c7c5c5;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+    /* font-family: 'Josefin Sans', sans-serif; */
+}
+/* 
+html {
+    scroll-behavior: smooth;
+  } */
+
+
+
+/* .............................................................. */
+/* ................// MY CODE START //........................... */
+
+
+/* .................................................... */
+/* ...............// NAVBAR //......................... */
+.my-nav{
+  position: sticky;
+  top: 0;
+  padding: 5px 0px;
+  z-index: 999;
+}
+
+.main-name{
+    font-family: 'Raleway', sans-serif;
+    font-size: 50px;
+    font-weight: 900;
+    color: var(--clr1);
+    /* padding-left: 30px; */
+}
+
+ul.options li{
+    margin: 1px 20px;
+    transition-duration: .3s;
+}
+
+ul.options li a{
+    font-size: 17px;
+    color: #3f3f3f;
+}
+
+ul.options li a:hover{
+    color: var(--clr8);
+    padding-bottom: 0;
+} 
+
+ul.options li:hover{
+    font-weight: bold;
+    color: var(--clr2);
+    border-bottom: 2px solid var(--clr8);
+}
+
+.username{
+    border-radius: 10px;
+    font-size: 18px;
+    padding: 5px 15px;
+    background-color: var(--clr1);
+    color: white;
+    box-shadow: 3px 5px 5px #0000003f;
+}
+
+#cart-total-items{
+    border-radius: 50px;
+    padding: 3px 10px;
+    margin-left: 5px;
+    font-weight: bold;
+    background-color: var(--clr8);
+    color: White;
+}
+
+/* ..................................................
+..............// HEADER //........................ */
+div.short-menu-sheet{
+    background: url("images/depositphotos_314008704-stock-photo-roasted-pork-rib-with-herbs.jpg") no-repeat center/cover;
+}
+
+div.short-menu-sheet .overlay{
+    background-color: #00000091;
+    min-height: 500px;
+    color: white;
+    padding: 100px 30px;
+}
+
+div.short-menu-sheet h2{
+    font-family: 'Caveat', cursive;
+    font-size: 57px;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 30px;
+    border-bottom: 4px solid var(--clr2);
+}
+
+table.best-food-list{
+    border-collapse: collapse;
+    color: white;
+}
+
+table.best-food-list td{
+    padding: 0px 20px;
+    padding-bottom: 30px;
+}
+
+table.best-food-list .name-available{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+table.best-food-list .name-available h3{
+    font-size: 23px;
+    margin-bottom: 0;
+    margin-right: 50px;
+}
+
+table.best-food-list .state-badge{
+    font-family: 'Open Sans', sans-serif;
+    /* font-style: italic; */
+    padding: 4px 20px;
+    border-radius: 2rem;
+    font-size: 13px;
+    margin-bottom: 0;
+}
+
+.available{
+    background-color: var(--clr8);
+}
+
+.unavailable{
+    background-color: var(--clr5);
+}
+
+table.best-food-list .desc{
+    color: var(--text-gray);
+}
+
+table.best-food-list .price{
+    font-family: 'Libre Baskerville', serif;
+    font-size: 30px;
+    font-weight: bold;
+    color: var(--clr2);
+    margin-left: 50px;
+}
+
+p.food-desc{
+    font-size: 14px;
+}
+
+/* .....................................................
+......................// FOOD LIST //................ */
+.category-title-container{
+    text-align: center;
+}
+
+.category-title{
+    display: inline-block;
+    color: var(--clr2);
+    border-bottom: 3px solid var(--clr2);
+    font-weight: bold;
+
+
+}
+
+.action{
+    padding: 3px 15px;
+    border-radius: 10px;
+    font-size: 13px;
+    color: white;
+    transition-duration: .5s;
+}
+
+.action:hover{
+    color: var(--clr8);
+    border: none;
+    font-weight: bold;
+    border-left: 3px solid var(--clr8);
+    border-bottom: 3px solid var(--clr8);
+}
+
+.buy-btn{
+    background-color: var(--clr2);
+}
+
+.command-btn{
+    border: 2px solid var(--clr8);
+    color: var(--clr8);
+}
+
+.bg-img{
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.card-desc-text{
+    height: 160px;
+    padding-bottom: 0;
+}
+
+h5.food-name{
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+p.card-price{
+    color: var(--clr6);
+}
+
+
+/* ............................................
+..............// FOOT FRAME //................. */
+section.foot-frame{
+    background-color: var(--clr1);
+    color: white;
+}
+
+.foot-block{
+    border-top-right-radius: 40%;
+    background-color: var(--clr1);
+    padding: 30px 70px;
+    transform: translateY(-2px);
+    /* border: solid 1px var(--clr1); */
+}
+
+table.main-table{
+    border-collapse: separate;
+    border-spacing: 40px;
+}
+
+.our-details{
+    margin-bottom: 50px;
+}
+
+.our-details th{
+    font-size: 30px;
+    color: #d8d8d8;
+    /* color: var(--clr2); */
+}
+
+.our-details tr td{
+    display: inline-block;
+}
+
+table.contact{
+    border-spacing: 500px;
+}
+
+table.contact th{
+    padding-bottom: 30px;
+}
+
+.contact tr.social-networks td{
+    display: inline-block;
+    padding: 5px 25px;
+    padding-bottom: 30px;
+}
+
+.number-link{
+    font-family: 'Raleway', sans-serif;
+    /* font-family: 'Caveat', cursive; */
+    text-decoration: none;
+    font-size: 24px;
+    padding-left: 20px;
+}
+
+.our-details tr img{
+    width: 30px;
+}
+
+.correction-pen{
+    height: 10px;
+    background-color: var(--clr1);
+    /* transform: translateY(-0px); */
+    margin-top: -3px;
+}
+
+.location-cell{
+    padding-left: 200px;
+}
+
+.text-color-gray{
+    color: #afaeae;
+}
+
+table.about img{
+    width: 100px;
+}
+
+p.copyright-text{
+    padding: 3px 30px;
+    /* padding-right: 100px;
+    background: linear-gradient(to right, #afaeae, var(--clr1)); */
+    background-color: #afaeae;
+    color: var(--clr1);
+    border-radius: 2rem;
+    font-size: 13px;
+}
+
+
+/* ............................................
+..............// SIGN UP //................. */
+
+div.signup h1{
+  margin-bottom: 50px;
+}
+
+
+
+/* ............................................
+.........// PRODUCT DETAILS //.............. */
+.product-details-container{
+    margin: 90px;
+    padding: 30px;
+    padding-bottom: 0;
+    background-color: var(--clr9);
+}
+
+.product-table{
+    border-collapse: collapse;
+    color: whitesmoke;
+}
+
+.product-table tr .img-td{
+    width: 70%;
+}
+
+.product-table tr td .img-and-price{
+    position: relative;
+}
+
+.product-table tr td .img-and-price h3{
+    position: absolute;
+    top: 0;
+    box-shadow: 8px 4px 4px var(--shad_clr);
+}
+
+
+.product-table tr td h3{
+    display: inline-block;
+    background-color: var(--clr1);
+    color: white;
+    padding: 7px 20px;
+    font-weight: bold;
+    margin: 0;
+
+}
+
+.product-table tr td .bg-img{
+    width: 100%;
+    display: block;
+}
+
+.trans_lt{
+    transform: translate3d(-50px, -60px, 0px); 
+  }
+
+.product-table tr td .text-block{
+    padding: 10px 30px;
+}
+
+.product-table tr td .text-block h2{
+    display: inline-block;
+    font-weight: bold;
+    margin-bottom: 40px;
+    color: var(--clr3);
+    border-bottom: 5px solid var(--clr3);
+}
+
+.add-to-cart-prod-pg{
+    border: 2px solid var(--clr4);
+    color: var(--clr4);
+}
+
+.add-to-cart-prod-pg:hover{
+    color: var(--clr2);
+    border-left: 3px solid var(--clr2);
+    border-bottom: 3px solid var(--clr2);;
+}
+
+.trans-to-show-others{
+    color: rgb(95, 95, 95);
+    font-size: 20px;
+}
+
+/* .........................................
+..............// CART //................. */
+.order-name{
+    font-size: 20px;
+    /* color: var(--clr1); */
+}
+
+.order-price{
+    font-size: 18px;
+    color: var(--clr4);
+}
+
+
+@media (min-width: 1025px) {
+    .h-custom {
+    height: 100vh !important;
+    }
+    }
+    
+    .card-registration .select-input.form-control[readonly]:not([disabled]) {
+    font-size: 1rem;
+    line-height: 2.15;
+    padding-left: .75em;
+    padding-right: .75em;
+    }
+    
+    .card-registration .select-arrow {
+    top: 13px;
+    }
+    
+    .bg-grey {
+    background-color: #eae8e8;
+    }
+    
+    @media (min-width: 992px) {
+    .card-registration-2 .bg-grey {
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    }
+    }
+    
+    @media (max-width: 991px) {
+    .card-registration-2 .bg-grey {
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+    }
+    }
+
+@media (max-width: 767px){
+
+    /* .................................................... */
+    /* ...............// NAVBAR //......................... */
+    .main-name{
+        font-size: 35px;
+        transform: scale(.9);
+    }
+
+    .username{
+        font-size: 15px;
+        transform: scale(.8);
+    }
+
+    .humburger-menu-btn{
+        transform: scale(.6);
+    }
+
+    /* ..................................................
+..............// HEADER //........................ */
+
+    div.short-menu-sheet .overlay{
+        padding: 50px 10px;
+    }
+
+    div.short-menu-sheet h2{
+        font-size: 33px;
+    }
+
+    table.best-food-list td{
+        padding: 0;
+        padding-bottom: 20px;
+    }
+
+    table.best-food-list .name-available h3{
+        font-size: 18px;
+        margin-right: 10px;
+    }
+
+    table.best-food-list .state-badge{
+        font-size: 11px;
+    }
+
+    table.best-food-list .price{
+        font-size: 15px;
+        margin-left: 10px;
+    }
+
+    p.desc{
+        font-size: 13px;
+    }
+        
+
+    /* ............................................
+    .........// PRODUCT DETAILS //.............. */
+    .product-details-container{
+        margin: 90px 30px;
+        padding: 10px;
+    }
+
+    .product-table tr .img-td{
+        width: 100%;
+        /* transform: scale(1.1); */
+    }
+
+    .product-table tr td .text-block p{
+        font-size: 14px;
+    }
+
+    .trans_lt{
+        transform: translate3d(-30px, -40px, 0px); 
+    }
+
+    .trans-to-show-others{
+        font-size: 16px;
+    }
+
+    /* ............................................
+..............// FOOT FRAME //................. */
+.foot-block{
+    border-top-right-radius: 30%;
+    padding: 15px;
+}
+
+table.main-table{
+    border-spacing: 4px;
+}
+
+.our-details th{
+    font-size: 18px;
+}
+.contact tr.social-networks td{
+    padding: 5px 10px;
+    padding-bottom: 25px;
+}
+
+.contact-text{
+    font-size: 14px;
+}
+
+.number-link{
+    font-size: 14px;
+    padding-left: 10px;
+}
+
+.our-details tr img{
+    width: 25px;
+}
+
+.correction-pen{
+    height: 10px;
+    /* transform: translateY(-0px); */
+    margin-top: -2px;
+}
+
+table.about img{
+    width: 70px;
+}
+
+p.copyright-text{
+    padding: 1px 10px;
+    border-radius: 2rem;
+    font-size: 11px;
+}
+
+
+}

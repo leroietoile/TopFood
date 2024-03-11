@@ -1,0 +1,262 @@
+{% load static %}
+<html lang="fr">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'store/style.css' %}">
+    <title>Top food</title>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg bg-light shadow w-100 my-nav">
+    <div class="container">
+      <a href="{% url 'index' %}" style="text-decoration: none;"><h1 class="main-name">TopFood</h1></a>
+
+      {% if user.is_authenticated %}
+        <h4 class="username d-lg-none">{{ user.username }}</h4>
+      {% endif %}
+      
+      <button class="navbar-toggler humburger-menu-btn"><span class="navbar-toggler-icon" data-bs-toggle="collapse" data-bs-target="#menu"></span></button>
+      <div class="collapse navbar-collapse ms-5" id="menu">
+        <ul class="navbar-nav options">
+          <li class="nav-item"><a href="{% url 'index' %}" class="nav-link">Accueil</a></li>
+          <!-- <li class="nav-item"><a href="#" class="nav-link">Menu</a></li> -->
+          {% if user.is_authenticated %}
+            <!-- <li class="nav-item"><a href="#" class="nav-link">Historique</a></li> -->
+            {% if user.cart %}
+              <li class="nav-item"><a href="{% url 'go-to-cart' %}" class="nav-link" id="cart-btn">Panier<span id="cart-total-items">{{ user.cart.orders.count }}</span></a></li>
+            {% else %}
+              <li class="nav-item"><a href="#" class="nav-link">Panier(0)</a></li>
+            {% endif %}
+            <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link">Deconnexion</a></li>
+          {% else %}
+            <li class="nav-item"><a href="{% url 'signup' %}" class="nav-link">S'inscrire</a></li>
+            <li class="nav-item"><a href="{% url 'login' %}" class="nav-link">Connexion</a></li>
+          {% endif %}
+        </ul>
+      </div>
+
+      {% if user.is_authenticated %}
+        <h4 class="username d-none d-lg-block" class="">{{ user.username }}</h4>
+      {% endif %}
+    </div>
+  </nav>
+
+
+  {% block content %}
+
+  {% endblock %}
+
+
+  <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+
+  <script>
+
+    // ...........// HIDE CATEGORY WITHOUT ANY DISH //.............
+    const cat_rows = document.querySelectorAll('.cat-row');
+    const cat_conts = document.querySelectorAll('.dishes-container');
+    let cont_element;
+    for(const row of cat_rows){
+      if(row.children.length == 0){
+        let id0 = row.id;
+        let list = id0.split('-');
+        let pure_id = list[list.length - 1]; 
+        let cont_id = 'cat-cont-' + pure_id
+        cont_element = document.getElementById(cont_id);
+        cont_element.remove();
+      }
+    }
+
+
+    // ..............// MANAGE CATEGORY SELECT FILTER//...............
+
+    const cat_select_box = document.getElementById('cat-select');
+    if(cat_select_box != null){
+      cat_select_box.addEventListener('change', ()=>{
+    
+        let selected_option_value = getSelectedOption(cat_select_box);
+        if(selected_option_value == 'none'){
+          for(const cat of cat_conts){
+            cat.style.display = 'block';
+            // matched_list.
+          }
+        }else{
+          let cat_id = selected_option_value;
+          cat_cont_id = 'cat-cont-' + cat_id;
+    
+          for(const cat of cat_conts){
+            if(cat.id != cat_cont_id){
+              cat.style.display = 'none';
+    
+            }else{
+              cat.style.display = 'block';
+            }
+          }
+        }
+      })
+    }
+
+        
+    let cart_quantity = '{{ user.cart.orders.count }}';
+    let cart_total_items = document.getElementById('cart-total-items');
+
+
+  // .............// ADD TO CART //..............
+    $(document).on("click", ".add-to-cart-btn", function(e){
+        
+        e.preventDefault();
+        
+        $.ajax({
+            
+            type: 'POST',
+            url: '{% url "add-to-cart" %}',
+            data: {
+                plat_id: $(this).val(),
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post'
+              },
+              
+              success: function(json){
+                  cart_quantity = json['cart_total_orders'];
+                  cart_total_items.innerText = cart_quantity;
+          },
+
+          error: function(xhr, errmsg, err){
+
+          }
+
+      })
+
+    })
+    
+
+    const orders_container = document.getElementById('orders-container');
+    const shopping_balance_label = document.getElementById('shopping-balance');
+    const cart_total_amount_label = document.getElementById('total');
+    const cart_items_number_label = document.getElementById('cart-items-number');
+    const select_box = document.getElementById('delivery');
+    let cart_total_amount = 0;
+
+    // ........// DELETE ORDER //..................
+    $(document).on("click", ".delete-order-btn", function(e){
+      e.preventDefault();
+      
+      $.ajax({
+        
+        type: 'POST',
+        url: '{% url "delete-order" %}',
+        data: {
+          plat_id: $(this).val(),
+          csrfmiddlewaretoken: '{{ csrf_token }}',
+          action: 'post'
+        },
+        
+        success: function(json){
+          // ............// GET INFO FROM VIEWS //............
+          let id = json['id'];
+          let shopping_balance = json['shopping_balance'];
+          let delivery_price = json['delivery_price'];
+          let cart_items_number = json['cart_items_number'];
+
+          // ...............// SELECT HTML ELEMENTS //.......
+          let order_block = document.getElementById('order-id-' + id)
+          let order_block_hr = document.getElementById('order-hr-id-' + id)
+
+          // ...........// REMOVE ORDER //...........
+          orders_container.removeChild(order_block);
+          orders_container.removeChild(order_block_hr);
+          cart_items_number_label.textContent = cart_items_number;
+          cart_total_items.textContent = cart_items_number;
+
+          // .........// REFRESH SHOPPING BALANCE //.........
+          shopping_balance_label.textContent = shopping_balance;
+
+          // ...........// MANAGE DELIVERY OPTIONS //.........
+          let selected_option_value = getSelectedOption(select_box);
+
+          //......// ADDING DELIVERY TO CART TOTAL //.......       
+          cart_total_amount = Number(shopping_balance) + Number(selected_option_value); 
+          
+          cart_total_amount_label.textContent = cart_total_amount + ' FCFA';
+          },
+
+          error: function(xhr, errmsg, err){
+
+          }
+
+      })
+
+    })
+
+
+    // .........// UPDATE TOTAL AMOUNT ACCORDING TO SELECTED OPTION //......
+    if(select_box != null){
+      select_box.addEventListener('change', ()=>{
+    
+        let selected_option_value = getSelectedOption(select_box);
+        cart_total_amount = Number(shopping_balance_label.textContent) + Number(selected_option_value);
+        cart_total_amount_label.textContent = cart_total_amount + ' FCFA';
+        
+      })
+    }
+
+
+    // ..........// SET ORDER QUANTITY //..............
+    $(document).on("change", ".order-qty-input", function(e){
+
+      e.preventDefault();
+      let id0 = $(this)[0].id;
+      let list = id0.split('-');
+      let pure_id = list[1];
+        
+        $.ajax({
+            
+            type: 'POST',
+            url: '{% url "modify-order" %}',
+            data: {
+                plat_id: id0,
+                order_qty: $(this).val(),
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post'
+              },
+              
+              success: function(json){
+                // ......// GET DATA FROM VIEWS //...........
+                let shopping_balance = json['shopping_balance'];
+                let order_price = json['order_price'];
+
+                // .......// SET ORDER PRICE AND SHOPPING BAL //............
+                let order_price_span_id = 'order-' + pure_id + "-price";
+                const order_price_label = document.getElementById(order_price_span_id);
+                order_price_label.textContent = order_price;
+                shopping_balance_label.textContent = shopping_balance;
+
+                // ...........// SET CART TOTAL AMOUNT //........
+                let selected_option_value = getSelectedOption(select_box);
+                cart_total_amount = Number(shopping_balance_label.textContent) + Number(selected_option_value)
+                cart_total_amount_label.textContent = cart_total_amount + ' FCFA'
+
+          },
+
+          error: function(xhr, errmsg, err){
+
+          }
+
+      })
+
+    })
+
+
+    function getSelectedOption(sel_box){
+      return selected_option_value = sel_box.value;
+    }
+
+  </script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+  <script src="{% static 'store/index.js' %}"></script>
+</body>
+</html>

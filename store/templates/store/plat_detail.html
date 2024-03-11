@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <div class="product-details-container">
+    <table class="product-table">
+      <tr>
+        <td class="img-td">
+          <div class="img-and-price trans_lt">
+            {% if plat.picture %}
+              <div class="bg-img" style="height: 500px; background-image: url('{{ plat.picture.url }}');"></div> 
+            {% else %}
+              <div class="bg-img" style="height: 500px; background-image: url('{% static 'store/images/image.jpg' %}');"></div>
+            {% endif %}
+            <h3>{{ plat.price }} FCFA</h3>
+          </div>
+        </td>
+  
+        <td class="d-none d-md-table-cell">
+          <div class="text-block">
+            <h2>{{ plat.name }}</h2>
+            <p>{{ plat.description }} </p>
+    
+            {% if user.is_authenticated %}
+            <button type="button" value="{{ plat.id }}" class=" action add-to-cart-prod-pg btn add-to-cart-btn">Ajouter au panier</button>
+            {% endif %}
+          </div>
+        </td>
+      </tr>
+
+      <tr class="d-table-row d-md-none">
+        <td>
+          <div class="text-block">
+            <h2>{{ plat.name }}</h2>
+            <p>{{ plat.description }} </p>
+    
+            {% if user.is_authenticated %}
+            <button type="button" value="{{ plat.id }}" class=" action add-to-cart-prod-pg btn add-to-cart-btn">Ajouter au panier</button>
+            {% endif %}
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+
+  <div class="container">
+    <div class="row">
+      <h2 class="trans-to-show-others">Vous pouriez être interessé par :</h2>
+      {% for dish in plats %}
+      {% if dish != plat and dish.category == plat.category %}
+      <div class=" col-12 col-md-6 col-lg-4">
+        <div class="card border-0 shadow my-5" >
+          {% if dish.picture %}
+          <div class="bg-img" style="height: 300px; background-image: url('{{ dish.picture.url }}');"></div> 
+          {% else %}
+          <div class="bg-img" style="height: 300px; background-image: url('{% static 'store/images/image.jpg' %}');"></div>
+          {% endif %}
+    
+          <div class="card-body card-desc-text">
+            <h5 class="card-title food-name">{{ dish.name }}</h5>
+            <p class="card-price">{{ dish.price }} FCFA</p>
+            <a href="{{ dish.get_absolute_url }}" class="action buy-btn btn">Voir</a>
+            {% if user.is_authenticated %}
+            <button type="button" value="{{ dish.id }}" class=" action command-btn btn add-to-cart-btn">Ajouter au panier</button>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      {% endif %}
+      {% endfor %}
+      {% for dish in plats %}
+      {% if not dish.category == plat.category %}
+      <div class=" col-12 col-md-6 col-lg-4">
+        <div class="card border-0 shadow my-5" >
+          {% if dish.picture %}
+          <div class="bg-img" style="height: 300px; background-image: url('{{ dish.picture.url }}');"></div> 
+          {% else %}
+          <div class="bg-img" style="height: 300px; background-image: url('{% static 'store/images/image.jpg' %}');"></div>
+          {% endif %}
+    
+          <div class="card-body card-desc-text">
+            <h5 class="card-title food-name">{{ dish.name }}</h5>
+            <p class="card-price">{{ dish.price }} FCFA</p>
+            <a href="{{ dish.get_absolute_url }}" class="action buy-btn btn">Voir</a>
+            {% if user.is_authenticated %}
+            <button type="button" value="{{ dish.id }}" class=" action command-btn btn add-to-cart-btn">Ajouter au panier</button>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+
+{% endblock %}

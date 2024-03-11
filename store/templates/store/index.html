@@ -1,0 +1,157 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+  <div class="short-menu-sheet">
+    <div class="overlay">
+      <h2>Nos meilleurs plats :</h2>
+      <table class="best-food-list">
+        {% for plat in plats %}
+            {% if plat.best and plat.available %}
+                <tr>
+                    <td>
+                    <div class="food-details">
+                        <div class="name-available">
+                        <h3>{{ plat.name }}</h3>
+                        <p class="state-badge available">Disponible</p>
+                        </div>
+                        <p class="desc">{{ plat.description }}</p>
+                    </div>
+                    </td>
+                    <td>
+                    <p class="price">{{ plat.price }} FCFA</p>
+                    </td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+        
+      </table>
+    </div>
+  </div>
+  
+  <div class="conatiner p-0 p-lg-5 mx-0 mw-lg-5 mt-5 mt-lg-0">
+    <div class="row">
+      
+      <div class="col-12 col-lg-6 mt-4">
+        <form class=" px-5 px-lg-0">
+          <select name="category" id="cat-select">
+            <option value="none">Tous les plats   </option>
+            {% for category in categories %}
+            <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+          </select>
+        </form>
+      </div>
+
+      <div class="col-12 col-lg-6 px-5">
+        <form class="card card-sm">
+          <div class="card-body row no-guitters align-items-center">
+
+            <div class="col">
+              <input type="search" placeholder="Rechercher un plat" name="search-bar" class="form-control form-control-borderless">
+            </div>
+            <div class="col-auto">
+              <button type="submit" class="btn btn-success"><img src="{% static 'store/images/search.svg' %}" alt=""></button>
+            </div>
+          </div>
+        </form>       
+      </div>
+
+
+    </div>
+  </div>
+
+  {% for category in categories %}
+  <div class="container py-5 dishes-container"  id="cat-cont-{{ category.id }}">
+    <div class="category-title-container"><h2 class="category-title">{{ category.name }}</h2></div>
+    <div class="row cat-row" id="cat-row-{{ category.id }}">
+        {% for plat in plats %}
+            {% if plat.category == category %}
+            <div class=" col-12 col-md-6 col-lg-4">
+                <div class="card border-0 shadow my-5" >
+                    {% if plat.picture %}
+                       <div class="bg-img" style="height: 300px; background-image: url('{{ plat.picture.url }}');"></div> 
+                    {% else %}
+                        <div class="bg-img" style="height: 300px; background-image: url('{% static 'store/images/image.jpg' %}');"></div>
+                    {% endif %}
+
+                    <div class="card-body card-desc-text">
+                        <h5 class="card-title food-name">{{ plat.name }}</h5>
+                        <p class="card-price">{{ plat.price }} FCFA</p>
+                        <a href="{{ plat.get_absolute_url }}" class="action buy-btn btn">Voir</a>
+                        {% if user.is_authenticated %}
+                        <button type="button" value="{{ plat.id }}" class=" action command-btn btn add-to-cart-btn">Ajouter au panier</button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+
+  
+  <section class="foot-frame">
+    <div style="height: 150px; border-bottom-left-radius: 30%; background-color: white; transform: translateY(-2px);"></div>
+    <div style="background-color: white; transform: translateY(-4px);">
+  
+      <div class="foot-block">
+        <table class="main-table">
+          <tr>
+            <td>
+
+              <table class="contact our-details">
+                <tr><th>Nous contacter</th></tr>
+      
+                <tr class="social-networks">
+                  <td><img src="{% static 'store/images/logo_whatsapp.png' %}" alt=""></td>
+                  <td><img src="{% static 'store/images/logo_facebook.png' %}" alt=""></td>
+                  <td><img src="{% static 'store/images/logo_mail.png' %}" alt=""></td>
+                </tr>
+      
+                <tr>
+                  <td class="text-color-gray contact-text" style="font-weight: bold;">Téléphone:</td>
+                  <td><a class="text-color-gray number-link" href="tel:+22896994996">+228 96 99 49 96</a></td>
+                </tr>
+      
+              </table>
+            </td>
+            <td class="location-cell  d-none d-md-table-cell">
+
+              <table class="about our-details text-color-gray">
+                <tr>
+                  <td><img src="{% static 'store/images/logo_localisation.png' %}" alt=""></td>
+                  <td>Agoé-Assiyéyé, Lomé, TOGO</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <tr class=" d-table-row d-md-none">
+            <td>
+              <table class="about our-details text-color-gray">
+                <tr>
+                  <td><img src="{% static 'store/images/logo_localisation.png' %}" alt=""></td>
+                  <td>Agoé-Assiyéyé, Lomé, TOGO</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <p class="text-color-gray copyright-text">© 2024 copyright TopFood</p>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+    <div class="correction-pen"></div>
+
+  </section>
+
+{% endblock %}
+

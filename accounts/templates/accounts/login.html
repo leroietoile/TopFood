@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container my-5 signup">
+
+        <h1>Page de connexion</h1>
+
+        {% if error_msg %}
+            <div class="container">
+                <div class="alert alert-danger alert-dismissible w-50 mx-auto shadow">
+                    Nom d'utilisateur ou mot de passe incorrect. Veuillez ressayez.
+                    <!-- <button class="btn-close" data-bs-dismiss="alert" area-label="Close"></button> -->
+                </div>
+            </div>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            <p class="my-5">
+                <label for="username" class="me-3"> Nom d'utilisateur</label>
+                <input type="text" id="username" name="username">
+            </p>
+            <p>
+                <label for="password" class="me-3"> Mot de passe</label>
+                <input type="password" id="password" name="password">
+            </p>
+            <button type="submit" class="mt-4">Se connecter</button>
+    
+        </form>
+    </div>
+
+{% endblock %}
+
